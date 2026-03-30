@@ -1,5 +1,7 @@
 ﻿namespace CybersecurityChatbot
 {
+
+    //This class handles all the methods relating to display and interface
     internal class UserInterface
     {
 
@@ -10,35 +12,37 @@
 
         private const ConsoleColor UserColour = ConsoleColor.Cyan;// User dialogue
         private const ConsoleColor DividerColour = ConsoleColor.DarkGray;//For dividers and such
-        private const ConsoleColor ErrorColour = ConsoleColor.Magenta;
+        private const ConsoleColor ErrorColour = ConsoleColor.Magenta; //Mostly used for debugging
         private const ConsoleColor InfoColour = ConsoleColor.White;
 
 
         // UserInterface Methods are '''static''' to make them easier to call in ChatBot.cs
+
         // This method displays the ASCII art (half of which was sourced from patorjk.com)
+        // Use the TypeWrite (extended version) to give it a cool typing effect.
         public static void DisplayArt()
         {
-            Console.ForegroundColor = AsciiColour;
-            Console.WriteLine(@"
-        .----.
-       / .--. \
-      | |    | |
-      | |    | |
-       \ '--' /
-    .============.
-    |  SECURED   |
-    |   > _ <    |
-    |            |
-    '============'
+            TypeWrite(@"
+              .------.
+             / .----. \
+             | |    | |
+             | |    | |
+             | |    | |
+           .============.
+           |  SECURED   |
+           |   >   <    |
+           |     O      |
+           '============'
 
-  ██████╗██╗   ██╗██████╗ ███████╗██████╗ 
- ██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝██╔══██╗
- ██║      ╚████╔╝ ██████╔╝█████╗  ██████╔╝ - security bot
- ╚██████╗  ╚██╔╝  ██╔══██╗██╔══╝  ██╔══██╗
-  ╚═════╝   ██║   ██████╔╝███████╗██║  ██║
-            ╚═╝   ╚═════╝ ╚══════╝╚═╝  ╚═╝
-            ");
-            Console.ResetColor();
+   ██████╗██╗   ██╗██████╗ ███████╗██████╗ 
+  ██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝██╔══██╗
+  ██║      ╚████╔╝ ██████╔╝█████╗  ██████╔╝ 
+  ╚██████╗  ╚██╔╝  ██╔══██╗██╔══╝  ██╔══██╗
+   ╚═════╝   ██║   ██████╔╝███████╗██║  ██║
+             ╚═╝   ╚═════╝ ╚══════╝╚═╝  ╚═╝
+        - security awareness bot
+", 3, AsciiColour, 0);
+
         }
 
         //This method prints a 'lil divider to make things appear neater than they are.
@@ -73,8 +77,10 @@
 
 
         // Gives that "typing" effect.
-        public static void TypeWrite(string message, int delayMs = 50)
+        // Uses default speed and colour
+        public static void TypeWrite(string message)
         {
+            int delayMs = 45;
             Console.ForegroundColor = InfoColour;
             foreach (char c in message)
             {
@@ -83,7 +89,23 @@
             }
             Console.ResetColor();
             Console.WriteLine();
-            Thread.Sleep(delayMs * 20);
+            Thread.Sleep(900);
+        }
+
+        // A second version that allows for finer control
+        // Asks for message, letter delay, colour and line delay
+        // Very nice
+        public static void TypeWrite(string message, int delayMs, ConsoleColor writeColour, int lineDelayMs)
+        {
+            Console.ForegroundColor = writeColour;
+            foreach (char c in message)
+            {
+                Console.Write(c);
+                Thread.Sleep(delayMs);
+            }
+            Console.ResetColor();
+            Console.WriteLine();
+            Thread.Sleep(lineDelayMs);
         }
 
         // Prints the Bot's dialogue
@@ -96,7 +118,7 @@
             TypeWrite(message);
         }
 
-        // *** For when Bot encounters an error (testing - will remove later)
+        // *** For when Bot encounters an error (debugging purposes. Should not show in final program)
         public static void PrintBotError(string message)
         {
             Console.ForegroundColor = ErrorColour;
@@ -106,7 +128,7 @@
         }
 
         // A regular message, but in colour.
-        public static void PrintColoured(string message, ConsoleColor colour)
+        public static void TypeWrite(string message, ConsoleColor colour)
         {
             Console.ForegroundColor = colour;
             Console.WriteLine(message);

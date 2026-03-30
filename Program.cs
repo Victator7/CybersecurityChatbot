@@ -1,5 +1,6 @@
 ﻿namespace CybersecurityChatbot
 {
+    //This class contains the main method, and call the chatbot class to launch the actual program.
     internal class Program
     {
         static void Main(string[] args)
